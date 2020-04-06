@@ -3,8 +3,17 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Users = require('../models/user');
+//Desestructuracion
+const  {verifyToken, verifyAdminRole} = require('../middlewares/authentication');
 
-app.get('/usuario', function (req, res) {
+app.get('/usuario', verifyToken,  (req, res) => {
+
+
+    // return res.json({
+    //     user: req.user,
+    //     name: req.user.name,
+    //     email: req.user.email
+    // });
 
     let from = req.query.from || 0;
     let limit = req.query.limit || 5;
@@ -35,7 +44,7 @@ app.get('/usuario', function (req, res) {
 
 });
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario', [verifyToken, verifyAdminRole], function (req, res) {
     let body = req.body;
 
     let user = new Users({
@@ -64,7 +73,7 @@ app.post('/usuario', function (req, res) {
 
 });
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id',[verifyToken, verifyAdminRole], function (req, res) {
 
     let id = req.params.id;
 
@@ -84,7 +93,7 @@ app.put('/usuario/:id', function (req, res) {
     });
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verifyToken, verifyAdminRole], function (req, res) {
     let id = req.params.id;
     // Users.findByIdAndRemove(id, (err, userDB) => {
     //     if (err) {
