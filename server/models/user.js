@@ -56,5 +56,5 @@ userSchema.methods.toJSON = function (){
 //Mensaje de validación en las propiedades únicas
 userSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser único'});
 
-module.exports = mongoose.model('users_app', userSchema);
+module.exports = mongoose.model('user', userSchema);
 
