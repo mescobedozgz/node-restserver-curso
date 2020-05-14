@@ -15,6 +15,10 @@ let productSchema = new Schema({
         unique: true,
         required: [true, 'The name is required'],
     },
+    img: {
+        type: String,
+        required: false
+    },
     priceUni: {type: Number, required: [true, 'The price is required']},
     description: {type: String, required: false},
     available: {type: Boolean, required: true, default: true},
